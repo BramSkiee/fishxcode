@@ -1,8 +1,34 @@
 {
-  "dependencies": {},
+  "name": "fishxcode-docs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FishXCode - AI Coding 中转站，支持 Claude、Codex、Gemini 模型在多种平台使用",
+  "keywords": [
+    "fishxcode",
+    "ai-coding",
+    "claude-code",
+    "codex",
+    "gemini",
+    "roocode",
+    "qwen-code",
+    "droid",
+    "api-relay",
+    "documentation"
+  ],
+  "homepage": "https://doc.fishxcode.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fishxcode/fishxcode.git"
+  },
+  "license": "MIT",
   "scripts": {
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "feed": "^4.2.2",
+    "vitepress": "^1.6.4"
   }
 }

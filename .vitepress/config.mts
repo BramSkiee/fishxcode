@@ -1,28 +1,463 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig, createContentLoader, type SiteConfig } from 'vitepress'
+import { Feed } from 'feed'
+import { writeFileSync, mkdirSync } from 'fs'
+import { resolve } from 'path'
 
-// https://vitepress.dev/reference/site-config
+const SITE_URL = 'https://doc.fishxcode.com'
+const SITE_TITLE = 'FishXCode'
+const SITE_DESC = 'AI Coding 中转站 - 支持 Claude、Codex、Gemini 模型在多种平台使用'
+
+async function generateFeed(siteConfig: SiteConfig) {
+  const feed = new Feed({
+    title: SITE_TITLE,
+    description: SITE_DESC,
+    id: SITE_URL,
+    link: SITE_URL,
+    language: 'zh-CN',
+    image: `${SITE_URL}/img/logo.jpg`,
+    favicon: `${SITE_URL}/img/logo.svg`,
+    copyright: `Copyright © ${new Date().getFullYear()} FishXCode`,
+    updated: new Date(),
+  })
+
+  const pages = await createContentLoader('*.md', { excerpt: true, render: true }).load()
+
+  for (const page of pages) {
+    if (!page.url || page.url === '/') continue
+    const title = page.frontmatter?.title || page.url.replace(/^\/|\.html$/g, '')
+    feed.addItem({
+      title,
+      id: `${SITE_URL}${page.url}`,
+      link: `${SITE_URL}${page.url}`,
+      description: page.excerpt || '',
+      date: page.frontmatter?.lastUpdated ? new Date(page.frontmatter.lastUpdated) : new Date(),
+    })
+  }
+
+  const outDir = siteConfig.outDir
+  writeFileSync(resolve(outDir, 'feed.xml'), feed.rss2())
+  writeFileSync(resolve(outDir, 'feed.atom'), feed.atom1())
+}
+
 export default defineConfig({
-  title: "FishXCode",
-  description: "FishXCode",
-  themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
-    ],
-
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
+  title: SITE_TITLE,
+  description: SITE_DESC,
+  lastUpdated: true,
+  sitemap: {
+    hostname: SITE_URL
+  },
+  head: [
+    ['link', { rel: 'icon', href: '/img/logo.svg' }],
+    ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'FishXCode RSS', href: '/feed.xml' }],
+    ['link', { rel: 'alternate', type: 'application/atom+xml', title: 'FishXCode Atom', href: '/feed.atom' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: 'FishXCode' }],
+    ['meta', { property: 'og:title', content: 'FishXCode - AI Coding 中转站' }],
+    ['meta', { property: 'og:description', content: SITE_DESC }],
+    ['meta', { property: 'og:image', content: `${SITE_URL}/img/logo.jpg` }],
+    ['meta', { property: 'og:url', content: SITE_URL }],
+    ['meta', { name: 'twitter:card', content: 'summary' }],
+    ['meta', { name: 'twitter:site', content: '@fishxcode' }],
+    ['meta', { name: 'twitter:image', content: `${SITE_URL}/img/logo.jpg` }],
+  ],
+  buildEnd: generateFeed,
+  locales: {
+    root: {
+      label: '简体中文',
+      lang: 'zh-CN',
+      themeConfig: {
+        nav: [
+          { text: '首页', link: '/' },
+          { text: '快速开始', link: '/start' },
+          {
+            text: '工具指南',
+            items: [
+              { text: 'Claude Code', link: '/start' },
+              { text: 'OpenAI Codex', link: '/codex' },
+              { text: 'Gemini Cli', link: '/gemini' },
+              { text: 'RooCode', link: '/roocode' },
+              { text: 'Qwen Code', link: '/qwencode' },
+              { text: 'Droid CLI', link: '/droid' }
+            ]
+          },
+          {
+            text: '更多',
+            items: [
+              { text: '工具对比', link: '/compare' },
+              { text: '支持的模型', link: '/models' },
+              { text: '常见问题', link: '/faq' },
+              { text: '更新日志', link: '/changelog' }
+            ]
+          },
+          { text: '立即注册', link: 'https://fishxcode.com/register?aff=9CTW' }
+        ],
+        sidebar: [
+          {
+            text: '快速开始',
+            items: [
+              { text: 'Claude Code', link: '/start' },
+              { text: 'OpenAI Codex', link: '/codex' },
+              { text: 'Gemini Cli', link: '/gemini' },
+              { text: 'RooCode', link: '/roocode' },
+              { text: 'Qwen Code', link: '/qwencode' },
+              { text: 'Droid CLI', link: '/droid' }
+            ]
+          },
+          {
+            text: '参考',
+            items: [
+              { text: '工具对比', link: '/compare' },
+              { text: '支持的模型', link: '/models' },
+              { text: '常见问题', link: '/faq' },
+              { text: '更新日志', link: '/changelog' }
+            ]
+          }
+        ],
+        editLink: {
+          pattern: 'https://github.com/fishxcode/fishxcode/edit/main/:path',
+          text: '在 GitHub 上编辑此页'
+        },
+        lastUpdated: {
+          text: '最后更新于'
+        },
+        docFooter: {
+          prev: '上一页',
+          next: '下一页'
+        },
+        outline: {
+          label: '页面导航'
+        }
       }
-    ],
-
+    },
+    en: {
+      label: 'English',
+      lang: 'en-US',
+      link: '/en/',
+      themeConfig: {
+        nav: [
+          { text: 'Home', link: '/en/' },
+          { text: 'Get Started', link: '/en/start' },
+          {
+            text: 'Tool Guides',
+            items: [
+              { text: 'Claude Code', link: '/en/start' },
+              { text: 'OpenAI Codex', link: '/en/codex' },
+              { text: 'Gemini Cli', link: '/en/gemini' },
+              { text: 'RooCode', link: '/en/roocode' },
+              { text: 'Qwen Code', link: '/en/qwencode' },
+              { text: 'Droid CLI', link: '/en/droid' }
+            ]
+          },
+          {
+            text: 'More',
+            items: [
+              { text: 'Tool Comparison', link: '/en/compare' },
+              { text: 'Supported Models', link: '/en/models' },
+              { text: 'FAQ', link: '/en/faq' },
+              { text: 'Changelog', link: '/en/changelog' }
+            ]
+          },
+          { text: 'Register Now', link: 'https://fishxcode.com/register?aff=9CTW' }
+        ],
+        sidebar: [
+          {
+            text: 'Get Started',
+            items: [
+              { text: 'Claude Code', link: '/en/start' },
+              { text: 'OpenAI Codex', link: '/en/codex' },
+              { text: 'Gemini Cli', link: '/en/gemini' },
+              { text: 'RooCode', link: '/en/roocode' },
+              { text: 'Qwen Code', link: '/en/qwencode' },
+              { text: 'Droid CLI', link: '/en/droid' }
+            ]
+          },
+          {
+            text: 'Reference',
+            items: [
+              { text: 'Tool Comparison', link: '/en/compare' },
+              { text: 'Supported Models', link: '/en/models' },
+              { text: 'FAQ', link: '/en/faq' },
+              { text: 'Changelog', link: '/en/changelog' }
+            ]
+          }
+        ],
+        editLink: {
+          pattern: 'https://github.com/fishxcode/fishxcode/edit/main/:path',
+          text: 'Edit this page on GitHub'
+        },
+        lastUpdated: {
+          text: 'Last updated'
+        },
+        docFooter: {
+          prev: 'Previous page',
+          next: 'Next page'
+        },
+        outline: {
+          label: 'On this page'
+        }
+      }
+    },
+    fr: {
+      label: 'Français',
+      lang: 'fr-FR',
+      link: '/fr/',
+      themeConfig: {
+        nav: [
+          { text: 'Accueil', link: '/fr/' },
+          { text: 'Démarrage rapide', link: '/fr/start' },
+          {
+            text: 'Guide des outils',
+            items: [
+              { text: 'Claude Code', link: '/fr/start' },
+              { text: 'OpenAI Codex', link: '/fr/codex' },
+              { text: 'Gemini Cli', link: '/fr/gemini' },
+              { text: 'RooCode', link: '/fr/roocode' },
+              { text: 'Qwen Code', link: '/fr/qwencode' },
+              { text: 'Droid CLI', link: '/fr/droid' }
+            ]
+          },
+          {
+            text: 'Plus',
+            items: [
+              { text: 'Comparaison des outils', link: '/fr/compare' },
+              { text: 'Modèles supportés', link: '/fr/models' },
+              { text: 'FAQ', link: '/fr/faq' },
+              { text: 'Journal des modifications', link: '/fr/changelog' }
+            ]
+          },
+          { text: "S'inscrire", link: 'https://fishxcode.com/register?aff=9CTW' }
+        ],
+        sidebar: [
+          {
+            text: 'Démarrage rapide',
+            items: [
+              { text: 'Claude Code', link: '/fr/start' },
+              { text: 'OpenAI Codex', link: '/fr/codex' },
+              { text: 'Gemini Cli', link: '/fr/gemini' },
+              { text: 'RooCode', link: '/fr/roocode' },
+              { text: 'Qwen Code', link: '/fr/qwencode' },
+              { text: 'Droid CLI', link: '/fr/droid' }
+            ]
+          },
+          {
+            text: 'Référence',
+            items: [
+              { text: 'Comparaison des outils', link: '/fr/compare' },
+              { text: 'Modèles supportés', link: '/fr/models' },
+              { text: 'FAQ', link: '/fr/faq' },
+              { text: 'Journal des modifications', link: '/fr/changelog' }
+            ]
+          }
+        ],
+        editLink: {
+          pattern: 'https://github.com/fishxcode/fishxcode/edit/main/:path',
+          text: 'Modifier cette page sur GitHub'
+        },
+        lastUpdated: {
+          text: 'Dernière mise à jour'
+        },
+        docFooter: {
+          prev: 'Page précédente',
+          next: 'Page suivante'
+        },
+        outline: {
+          label: 'Sur cette page'
+        }
+      }
+    },
+    es: {
+      label: 'Español',
+      lang: 'es-ES',
+      link: '/es/',
+      themeConfig: {
+        nav: [
+          { text: 'Inicio', link: '/es/' },
+          { text: 'Comenzar', link: '/es/start' },
+          {
+            text: 'Guía de herramientas',
+            items: [
+              { text: 'Claude Code', link: '/es/start' },
+              { text: 'OpenAI Codex', link: '/es/codex' },
+              { text: 'Gemini Cli', link: '/es/gemini' },
+              { text: 'RooCode', link: '/es/roocode' },
+              { text: 'Qwen Code', link: '/es/qwencode' },
+              { text: 'Droid CLI', link: '/es/droid' }
+            ]
+          },
+          {
+            text: 'Más',
+            items: [
+              { text: 'Comparación de herramientas', link: '/es/compare' },
+              { text: 'Modelos soportados', link: '/es/models' },
+              { text: 'Preguntas frecuentes', link: '/es/faq' },
+              { text: 'Registro de cambios', link: '/es/changelog' }
+            ]
+          },
+          { text: 'Registrarse', link: 'https://fishxcode.com/register?aff=9CTW' }
+        ],
+        sidebar: [
+          {
+            text: 'Comenzar',
+            items: [
+              { text: 'Claude Code', link: '/es/start' },
+              { text: 'OpenAI Codex', link: '/es/codex' },
+              { text: 'Gemini Cli', link: '/es/gemini' },
+              { text: 'RooCode', link: '/es/roocode' },
+              { text: 'Qwen Code', link: '/es/qwencode' },
+              { text: 'Droid CLI', link: '/es/droid' }
+            ]
+          },
+          {
+            text: 'Referencia',
+            items: [
+              { text: 'Comparación de herramientas', link: '/es/compare' },
+              { text: 'Modelos soportados', link: '/es/models' },
+              { text: 'Preguntas frecuentes', link: '/es/faq' },
+              { text: 'Registro de cambios', link: '/es/changelog' }
+            ]
+          }
+        ],
+        editLink: {
+          pattern: 'https://github.com/fishxcode/fishxcode/edit/main/:path',
+          text: 'Editar esta página en GitHub'
+        },
+        lastUpdated: {
+          text: 'Última actualización'
+        },
+        docFooter: {
+          prev: 'Página anterior',
+          next: 'Página siguiente'
+        },
+        outline: {
+          label: 'En esta página'
+        }
+      }
+    },
+    pt: {
+      label: 'Português',
+      lang: 'pt-BR',
+      link: '/pt/',
+      themeConfig: {
+        nav: [
+          { text: 'Início', link: '/pt/' },
+          { text: 'Começar', link: '/pt/start' },
+          {
+            text: 'Guias de ferramentas',
+            items: [
+              { text: 'Claude Code', link: '/pt/start' },
+              { text: 'OpenAI Codex', link: '/pt/codex' },
+              { text: 'Gemini Cli', link: '/pt/gemini' },
+              { text: 'RooCode', link: '/pt/roocode' },
+              { text: 'Qwen Code', link: '/pt/qwencode' },
+              { text: 'Droid CLI', link: '/pt/droid' }
+            ]
+          },
+          {
+            text: 'Mais',
+            items: [
+              { text: 'Comparação de ferramentas', link: '/pt/compare' },
+              { text: 'Modelos suportados', link: '/pt/models' },
+              { text: 'Perguntas frequentes', link: '/pt/faq' },
+              { text: 'Registro de alterações', link: '/pt/changelog' }
+            ]
+          },
+          { text: 'Registrar', link: 'https://fishxcode.com/register?aff=9CTW' }
+        ],
+        sidebar: [
+          {
+            text: 'Começar',
+            items: [
+              { text: 'Claude Code', link: '/pt/start' },
+              { text: 'OpenAI Codex', link: '/pt/codex' },
+              { text: 'Gemini Cli', link: '/pt/gemini' },
+              { text: 'RooCode', link: '/pt/roocode' },
+              { text: 'Qwen Code', link: '/pt/qwencode' },
+              { text: 'Droid CLI', link: '/pt/droid' }
+            ]
+          },
+          {
+            text: 'Referência',
+            items: [
+              { text: 'Comparação de ferramentas', link: '/pt/compare' },
+              { text: 'Modelos suportados', link: '/pt/models' },
+              { text: 'Perguntas frequentes', link: '/pt/faq' },
+              { text: 'Registro de alterações', link: '/pt/changelog' }
+            ]
+          }
+        ],
+        editLink: {
+          pattern: 'https://github.com/fishxcode/fishxcode/edit/main/:path',
+          text: 'Editar esta página no GitHub'
+        },
+        lastUpdated: {
+          text: 'Última atualização'
+        },
+        docFooter: {
+          prev: 'Página anterior',
+          next: 'Próxima página'
+        },
+        outline: {
+          label: 'Nesta página'
+        }
+      }
+    }
+  },
+  themeConfig: {
+    logo: '/img/logo.svg',
+    search: {
+      provider: 'local',
+      options: {
+        locales: {
+          root: {
+            translations: {
+              button: { buttonText: '搜索文档', buttonAriaLabel: '搜索文档' },
+              modal: {
+                noResultsText: '无法找到相关结果',
+                resetButtonTitle: '清除查询条件',
+                footer: { selectText: '选择', navigateText: '切换', closeText: '关闭' }
+              }
+            }
+          },
+          fr: {
+            translations: {
+              button: { buttonText: 'Rechercher', buttonAriaLabel: 'Rechercher' },
+              modal: {
+                noResultsText: 'Aucun résultat trouvé',
+                resetButtonTitle: 'Réinitialiser la recherche',
+                footer: { selectText: 'Sélectionner', navigateText: 'Naviguer', closeText: 'Fermer' }
+              }
+            }
+          },
+          es: {
+            translations: {
+              button: { buttonText: 'Buscar', buttonAriaLabel: 'Buscar' },
+              modal: {
+                noResultsText: 'No se encontraron resultados',
+                resetButtonTitle: 'Restablecer búsqueda',
+                footer: { selectText: 'Seleccionar', navigateText: 'Navegar', closeText: 'Cerrar' }
+              }
+            }
+          },
+          pt: {
+            translations: {
+              button: { buttonText: 'Pesquisar', buttonAriaLabel: 'Pesquisar' },
+              modal: {
+                noResultsText: 'Nenhum resultado encontrado',
+                resetButtonTitle: 'Limpar pesquisa',
+                footer: { selectText: 'Selecionar', navigateText: 'Navegar', closeText: 'Fechar' }
+              }
+            }
+          }
+        }
+      }
+    },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ]
+      { icon: 'x', link: 'https://x.com/fishxcode' },
+      { icon: 'github', link: 'https://github.com/fishxcode' }
+    ],
+    footer: {
+      message: 'FishXCode - AI Coding 中转站',
+      copyright: `Copyright © ${new Date().getFullYear()} FishXCode`
+    }
   }
 })

@@ -2,6 +2,7 @@
 import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
+import NotFound from './NotFound.vue'
 import './style.css'
 
 export default {
@@ -11,6 +12,7 @@ export default {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
     })
   },
+  NotFound,
   enhanceApp({ app, router, siteData }) {
     // ...
   }
