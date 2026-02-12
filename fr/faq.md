@@ -29,7 +29,7 @@ Pour les projets sensibles, nous vous recommandons de consulter la politique de 
 
 ### Comment creer un compte ?
 
-Rendez-vous sur [fishxcode.com/register](https://fishxcode.com/register?aff=9CTW et suivez les instructions pour vous inscrire.
+Rendez-vous sur [fishxcode.com/register](https://fishxcode.com/register?aff=9CTW) et suivez les instructions pour vous inscrire.
 
 ### Comment obtenir un token API ?
 

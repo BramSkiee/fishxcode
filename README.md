@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/img/logo.svg" width="120" alt="FishXCode Logo">
+  <img src="/img/logo.svg" width="120" alt="FishXCode Logo">
 </p>
 
 <h1 align="center">FishXCode</h1>
@@ -11,7 +11,7 @@
 <p align="center">
   <a href="https://doc.fishxcode.com">文档</a> ·
   <a href="https://doc.fishxcode.com/en/">English</a> ·
-  <a href="https://fishxcode.com/register">注册</a> ·
+  <a href="https://fishxcode.com/register?aff=9CTW">注册</a> ·
   <a href="https://doc.fishxcode.com/faq">FAQ</a>
 </p>
 
@@ -81,4 +81,4 @@ pnpm preview
 
 ## License
 
-[MIT](LICENSE)
+MIT

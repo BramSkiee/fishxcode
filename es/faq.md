@@ -29,7 +29,7 @@ Para proyectos sensibles, te sugerimos revisar la politica de privacidad de cada
 
 ### Como me registro?
 
-Visita [fishxcode.com/register](https://fishxcode.com/register?aff=9CTW y sigue las instrucciones para crear tu cuenta.
+Visita [fishxcode.com/register](https://fishxcode.com/register?aff=9CTW) y sigue las instrucciones para crear tu cuenta.
 
 ### Como obtengo un token de API?
 

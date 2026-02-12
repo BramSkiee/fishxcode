@@ -29,7 +29,7 @@ Para projetos sensiveis, recomendamos consultar a politica de privacidade de cad
 
 ### Como me cadastro?
 
-Acesse [fishxcode.com/register](https://fishxcode.com/register?aff=9CTW e siga as instrucoes para criar sua conta.
+Acesse [fishxcode.com/register](https://fishxcode.com/register?aff=9CTW) e siga as instrucoes para criar sua conta.
 
 ### Como obtenho um token de API?
 

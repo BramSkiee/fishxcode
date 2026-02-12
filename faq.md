@@ -29,7 +29,7 @@ FishXCode 仅作为 API 中转服务，不存储你的代码和对话内容。�
 
 ### 如何注册？
 
-访问 [fishxcode.com/register](https://fishxcode.com/register?aff=9CTW，按提示完成注册即可。
+访问 [fishxcode.com/register](https://fishxcode.com/register?aff=9CTW)，按提示完成注册即可。
 
 ### 如何获取 API Token？
 
