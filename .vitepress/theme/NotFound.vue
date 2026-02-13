@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vitepress'
+import { ref, computed, onMounted } from 'vue'
 
-const route = useRoute()
+const currentPath = ref('/')
+
+onMounted(() => {
+  currentPath.value = window.location.pathname
+})
 
 const i18n = {
   'zh-CN': { title: '页面未找到', subtitle: '你访问的页面不存在', link: '返回首页', home: '/' },
@@ -20,7 +23,7 @@ const prefixMap: Record<string, string> = {
 }
 
 const locale = computed(() => {
-  const path = route.path
+  const path = currentPath.value
   for (const [prefix, lang] of Object.entries(prefixMap)) {
     if (path.startsWith(prefix)) return lang
   }
