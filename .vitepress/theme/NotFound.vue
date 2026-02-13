@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRoute } from 'vitepress'
 
+const route = useRoute()
 const currentPath = ref('/')
 
-onMounted(() => {
+function updatePath() {
   currentPath.value = window.location.pathname
-})
+}
+
+onMounted(updatePath)
+watch(() => route.path, updatePath)
 
 const i18n = {
   'zh-CN': { title: '页面未找到', subtitle: '你访问的页面不存在', link: '返回首页', home: '/' },
