@@ -1,4 +1,6 @@
 import { defineConfig, createContentLoader, type SiteConfig } from 'vitepress'
+import { withPwa } from '@vite-pwa/vitepress'
+import { groupIconVitePlugin } from 'vitepress-plugin-group-icons'
 import { Feed } from 'feed'
 import { writeFileSync, mkdirSync } from 'fs'
 import { resolve } from 'path'
@@ -39,7 +41,7 @@ async function generateFeed(siteConfig: SiteConfig) {
   writeFileSync(resolve(outDir, 'feed.atom'), feed.atom1())
 }
 
-export default defineConfig({
+export default withPwa(defineConfig({
   title: SITE_TITLE,
   description: SITE_DESC,
   lastUpdated: true,
@@ -61,6 +63,26 @@ export default defineConfig({
     ['meta', { name: 'twitter:image', content: `${SITE_URL}/img/logo.jpg` }],
   ],
   buildEnd: generateFeed,
+  vite: {
+    plugins: [
+      groupIconVitePlugin()
+    ]
+  },
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'FishXCode - AI Coding 中转站',
+      short_name: 'FishXCode',
+      description: SITE_DESC,
+      theme_color: '#6366f1',
+      icons: [
+        { src: '/img/logo.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any maskable' }
+      ]
+    },
+    workbox: {
+      globPatterns: ['**/*.{css,js,html,svg,png,jpg,ico,txt,woff2}']
+    }
+  },
   locales: {
     root: {
       label: '简体中文',
@@ -470,4 +492,4 @@ export default defineConfig({
       copyright: `Copyright © ${new Date().getFullYear()} FishXCode`
     }
   }
-})
+}))

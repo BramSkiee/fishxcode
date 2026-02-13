@@ -28,7 +28,12 @@
     "preview": "vitepress preview"
   },
   "devDependencies": {
+    "@giscus/vue": "^3.1.1",
+    "@vite-pwa/vitepress": "^1.1.0",
     "feed": "^4.2.2",
-    "vitepress": "^1.6.4"
+    "medium-zoom": "^1.1.0",
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-group-icons": "^1.7.1",
+    "workbox-window": "^7.4.0"
   }
 }
