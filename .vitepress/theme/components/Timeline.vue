@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, useTemplateRef } from 'vue'
+import { ref, computed, onMounted, onUnmounted, useTemplateRef } from 'vue'
+import { useData } from 'vitepress'
 
 interface TimelineItem {
   date: string
@@ -9,6 +10,17 @@ interface TimelineItem {
 }
 
 defineProps<{ items: TimelineItem[] }>()
+
+const I18N_TYPE_LABELS: Record<string, Record<string, string>> = {
+  'zh-CN': { feature: '新功能', fix: '修复', breaking: '破坏性变更', improvement: '优化' },
+  'en-US': { feature: 'New', fix: 'Fix', breaking: 'Breaking', improvement: 'Improvement' },
+  'fr-FR': { feature: 'Nouveau', fix: 'Correctif', breaking: 'Rupture', improvement: 'Amélioration' },
+  'es-ES': { feature: 'Nuevo', fix: 'Corrección', breaking: 'Ruptura', improvement: 'Mejora' },
+  'pt-BR': { feature: 'Novo', fix: 'Correção', breaking: 'Ruptura', improvement: 'Melhoria' },
+}
+
+const { lang } = useData()
+const typeLabels = computed(() => I18N_TYPE_LABELS[lang.value] ?? I18N_TYPE_LABELS['zh-CN'])
 
 const container = useTemplateRef<HTMLElement>('containerRef')
 const visibleSet = ref(new Set<number>())
@@ -28,13 +40,6 @@ onMounted(() => {
 })
 
 onUnmounted(() => observer?.disconnect())
-
-const TYPE_LABELS: Record<string, string> = {
-  feature: '新功能',
-  fix: '修复',
-  breaking: '破坏性变更',
-  improvement: '优化',
-}
 </script>
 
 <template>
@@ -49,7 +54,7 @@ const TYPE_LABELS: Record<string, string> = {
       <div class="content">
         <span class="date">{{ item.date }}</span>
         <span v-if="item.type" class="type-badge" :class="item.type">
-          {{ TYPE_LABELS[item.type] ?? item.type }}
+          {{ typeLabels[item.type] ?? item.type }}
         </span>
         <h4 class="item-title">{{ item.title }}</h4>
         <p v-if="item.description" class="item-desc">{{ item.description }}</p>
