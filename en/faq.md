@@ -62,7 +62,7 @@ Check these common issues:
 ```bash
 # Verify that variables are set
 echo $ANTHROPIC_BASE_URL
-echo $ANTHROPIC_API_KEY
+echo $ANTHROPIC_AUTH_TOKEN
 
 # Empty output means the variable is not set
 ```

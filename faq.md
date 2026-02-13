@@ -62,7 +62,7 @@ FishXCode 为每个用户提供用量额度，具体数量根据平台资源动�
 ```bash
 # 检查变量是否已设置
 echo $ANTHROPIC_BASE_URL
-echo $ANTHROPIC_API_KEY
+echo $ANTHROPIC_AUTH_TOKEN
 
 # 如果为空，说明变量未生效
 ```

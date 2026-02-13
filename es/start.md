@@ -29,19 +29,16 @@ bunx --global @anthropic-ai/claude-code
 ```bash [Linux/macOS]
 export ANTHROPIC_BASE_URL=https://fishxcode.com/
 export ANTHROPIC_AUTH_TOKEN=sk-xxx
-export ANTHROPIC_API_KEY=sk-xxx
 ```
 
 ```powershell [Windows PowerShell]
 $env:ANTHROPIC_BASE_URL="https://fishxcode.com/"
 $env:ANTHROPIC_AUTH_TOKEN="sk-xxx"
-$env:ANTHROPIC_API_KEY="sk-xxx"
 ```
 
 ```cmd [Windows CMD]
 set ANTHROPIC_BASE_URL=https://fishxcode.com/
 set ANTHROPIC_AUTH_TOKEN=sk-xxx
-set ANTHROPIC_API_KEY=sk-xxx
 ```
 
 :::

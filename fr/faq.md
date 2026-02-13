@@ -62,7 +62,7 @@ Verifiez les points suivants :
 ```bash
 # Verifier que les variables sont definies
 echo $ANTHROPIC_BASE_URL
-echo $ANTHROPIC_API_KEY
+echo $ANTHROPIC_AUTH_TOKEN
 
 # Si la sortie est vide, la variable n'est pas definie
 ```
