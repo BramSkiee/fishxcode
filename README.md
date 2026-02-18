@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/img/logo.svg" width="120" alt="FishXCode Logo">
+  <img src="https://doc.fishxcode.com/img/logo.svg" width="120" alt="FishXCode Logo">
 </p>
 
 <h1 align="center">FishXCode</h1>
