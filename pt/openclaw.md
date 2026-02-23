@@ -34,15 +34,33 @@ OpenClaw é uma plataforma de assistente de IA pessoal de código aberto e auto-
 ## Instalação
 
 ::: info Requisitos
-- Node.js 22 ou superior
 - API Key do FishXCode
+- Node.js 22+ necessário para os métodos npm/git; o one-liner curl gerencia as dependências automaticamente
 :::
 
-```bash
+::: code-group
+
+```bash [curl (Recomendado)]
+curl -fsSL https://openclaw.ai/install.sh | bash
+```
+
+```bash [npm]
 npm install -g openclaw@latest
 ```
 
-Após a instalação, execute o assistente de configuração:
+```bash [curl (modo git)]
+curl -fsSL https://openclaw.ai/install.sh | bash -s -- --install-method git
+```
+
+```bash [Clonar manualmente]
+git clone https://github.com/openclaw/openclaw.git
+cd openclaw && pnpm install && pnpm run build
+pnpm run openclaw onboard
+```
+
+:::
+
+Após a instalação, execute o assistente de configuração (já incluído nas etapas de clonagem manual):
 
 ```bash
 openclaw onboard

@@ -34,15 +34,33 @@ OpenClaw 是一个开源、自托管的个人 AI 助手平台，将消息应用�
 ## 安装
 
 ::: info 环境要求
-- Node.js 22 或更高版本
 - FishXCode API Key
+- 使用 npm/git 方式需要 Node.js 22+；curl 一键安装会自动处理依赖
 :::
 
-```bash
+::: code-group
+
+```bash [curl（推荐）]
+curl -fsSL https://openclaw.ai/install.sh | bash
+```
+
+```bash [npm]
 npm install -g openclaw@latest
 ```
 
-安装完成后运行引导向导：
+```bash [curl（git 模式）]
+curl -fsSL https://openclaw.ai/install.sh | bash -s -- --install-method git
+```
+
+```bash [手动克隆]
+git clone https://github.com/openclaw/openclaw.git
+cd openclaw && pnpm install && pnpm run build
+pnpm run openclaw onboard
+```
+
+:::
+
+安装完成后运行引导向导（手动克隆方式已在上方命令中包含）：
 
 ```bash
 openclaw onboard
